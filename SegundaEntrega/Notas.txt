@@ -1,0 +1,8 @@
+iniciar sesion como admin 
+email: carla@gmail.com
+contra : carla
+
+No funciona la funcion Parse para la parte de editar 
+EditarUsuario para modificar los permisos tampoco funciona no entiendo
+porque 
+No supe implementar el gestionador de permisos , solo funciona con el admin
