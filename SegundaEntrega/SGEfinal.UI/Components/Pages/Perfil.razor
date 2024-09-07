@@ -1,0 +1,33 @@
+@page "/perfil"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador
+@inject IJSRuntime JsRunTime;
+
+@inject CasoDeUsoUsuarioConsultaId CasoDeUsoUsuarioConsultaId
+@inject CasoDeUsoUsuarioModificar CasoDeUsoUsuarioModificar
+@inject ServicioIniciar ServicioIniciar
+@inject CasoDeUsoUsuarioOtorgarPermiso CasoDeUsoUsuarioOtorgarPermiso
+@inject CasoDeUsoUsuarioQuitarPermiso CasoDeUsoUsuarioQuitarPermiso
+
+@if(ServicioIniciar.userL != null){
+    <input placeholder="Nombre" @bind="_user.nombre" class="form-control">
+    <input placeholder="Apellido" @bind="_user.apellido" class="form-control">
+    <input placeholder="Contraseña"  @bind="_user.contra" class="form-control">
+    <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+}
+
+@code{
+    [Parameter] public int IdUsuario { get; set; }
+    Usuario _user = new Usuario();
+    protected override void OnInitialized()
+    {
+        _user = ServicioIniciar.userL;
+    }
+
+    void Aceptar(){
+         CasoDeUsoUsuarioModificar.Ejecutar(_user);
+         _user= new Usuario();
+        
+    }
+
+}

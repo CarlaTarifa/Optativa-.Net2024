@@ -1,0 +1,70 @@
+@page "/listarUsuarios"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador
+@inject IJSRuntime JsRunTime;
+
+@inject CasoDeUsoUsuarioListarTodos CasoDeUsoUsuarioListarTodos
+@inject CasoDeUsoUsuarioEliminar CasoDeUsoUsuarioEliminar
+@inject ServicioIniciar ServicioIniciar
+
+@using SGEfinal.UI.Components
+
+<DialogoConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+
+@if(_lista.Count()>0){
+    <h3>Usuarios</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+         <tbody>
+            @foreach(var cli in _lista){
+                <tr>
+                    <td>@cli.idUsuario</td>
+                    <td> @cli.nombre</td>
+                    <td>@cli.apellido</td>
+                    <td>
+                        
+                            <button class="btn btn-primary" @onclick="()=>ModificarUsuario(cli)">Editar</button>
+                        
+                      
+                            <button class="btn btn-danger"@onclick="()=>ConfirmarEliminacion(cli)">Eliminar</button>
+                        
+                    </td>            
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code{
+    List<Usuario> _lista= new List<Usuario>();
+    protected override void OnInitialized(){
+         _lista=CasoDeUsoUsuarioListarTodos.Ejecutar();
+
+    }
+
+    DialogoConfirmacion dialogo=null!;
+    Usuario? _usuarioEliminar=null;
+    private void ConfirmarEliminacion(Usuario cli){
+        _usuarioEliminar=cli;
+        dialogo.Mensaje = $"¿Desea eliminar el usuario {cli.nombre} {cli.apellido}?";
+        dialogo.Mostrar();
+    }
+    private void Eliminar(){
+        if(_usuarioEliminar!= null){
+            CasoDeUsoUsuarioEliminar.Ejecutar(_usuarioEliminar.idUsuario);
+            _lista=CasoDeUsoUsuarioListarTodos.Ejecutar();
+        }
+    }
+
+     void ModificarUsuario(Usuario u){
+        Navegador.NavigateTo($"/editarUsuario/u.idUsuario");
+    }
+
+
+}

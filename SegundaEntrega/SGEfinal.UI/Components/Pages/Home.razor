@@ -1,0 +1,20 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Pagina de inicio</PageTitle>
+
+<h1>Bienvenido/a al sistema para la gestion de expedientes </h1>
+
+<button @onclick="IniciarSesion">Iniciar Sesion</button>
+<button @onclick="Registrarse">Registrarse</button>
+
+@code{
+    private void IniciarSesion(){
+        Navigation.NavigateTo("/iniciarSesion");
+
+    }
+    private void Registrarse(){
+        Navigation.NavigateTo("/registrarse");
+    }
+}

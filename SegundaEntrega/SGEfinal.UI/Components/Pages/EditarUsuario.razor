@@ -1,0 +1,68 @@
+@page "/editarUsuario/{Id:int?}"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador;
+
+@inject CasoDeUsoUsuarioModificar CasoDeUsoUsuarioModificar
+@inject CasoDeUsoUsuarioConsultaId CasoDeUsoUsuarioConsultaId
+@inject ServicioIniciar ServicioIniciar
+
+@if(ServicioIniciar.userL.idUsuario==1){
+    <h2>Modificar Usuario "@ServicioIniciar.userL.nombre</h2>
+    <input placeholder="Nombre" @bind="_nombre" class="form-control">
+    <input placeholder="Apellido" @bind="_apellido" class="form-control">
+    <input placeholder="Email" @bind="_email" class="form-control">
+    <input placeholder="Contraseña" @bind="_contra" class="form-control">
+    <br>
+    <label class="mt-1" for="permi">Permiso</label>
+    <select class="form-control" @bind="_permiso" id="permi">
+        <option value="" disabled selected>Seleccione un permiso</option>
+        <option>ExpedienteAlta</option>
+        <option>ExpedienteBaja</option>
+        <option>ExpedienteModificacion</option>
+        <option>TramiteAlta</option>
+        <option>TramiteBaja</option>
+        <option>TramiteModificacion</option>
+    </select>
+    <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+}  
+
+
+
+@code{
+    Usuario _u=new Usuario();
+    [Parameter] public int? Id{get;set;}
+
+    string _contra="",_nombre="",_apellido="",_email="";
+    Permiso _permiso;
+    protected override void OnParametersSet(){
+        if(ServicioIniciar.userL !=null) {
+            if(Id != null){
+                var usuario_hallado= CasoDeUsoUsuarioConsultaId.Ejecutar(Id.Value);
+                if(usuario_hallado != null){
+                    if(usuario_hallado.idUsuario == 1){
+                        _u=usuario_hallado;
+                        //p=(Permiso)Enum.Parse(typeof(Permiso),_permiso);
+                        _u.permisos.Add(_permiso);
+                        _u.nombre=_nombre;
+                        _u.apellido=_apellido;
+                        _u.email=_email;
+                        _u.contra=_contra;
+                        
+                    }
+                    else{
+                        _u=usuario_hallado;
+                        _u.nombre=_nombre;
+                        _u.apellido=_apellido;
+                        _u.email=_email;
+                        _u.contra=_contra;
+                    }
+                }
+            }
+        }
+    }
+    void Aceptar(){
+         CasoDeUsoUsuarioModificar.Ejecutar(_u);
+         _u= new Usuario();
+        Navegador.NavigateTo("/listarUsuarios");
+    }
+}

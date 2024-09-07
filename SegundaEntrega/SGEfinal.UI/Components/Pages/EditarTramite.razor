@@ -1,0 +1,64 @@
+@page "/editarTram/{Id:int?}"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador;
+
+@inject IServicioAutorizacion ServicioAutorizacion
+@inject ServicioIniciar ServicioIniciar
+
+@inject CasoDeUsoTramiteModificacion CasoDeUsoTramiteModificacion
+@inject CasoDeUsoTramiteConsultaTramite CasoDeUsoTramiteConsultaTramite
+
+<h1>Modificar Tramite</h1>
+@if(_tieneP){
+    <input placeholder="IdExpediente" @bind="_IdExpediente" class="form-control">
+    <input placeholder="Contenido" @bind="_contenido" class="form-control">
+    <label class="mt-1" for="etiq">Etiqueta</label>
+    <select class="form-control" @bind="_etiqueta" id="etiq">
+        <option value="" disabled selected>Seleccione una etiqueta</option>
+        <option>EscritoPresentado</option>
+        <option>PaseAEstudio</option>
+        <option>Despacho</option>
+        <option>Resolucion</option>
+        <option>Notificacion</option>
+        <option>PaseAlArchivo</option>
+    </select>
+    <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+}
+else {
+    <h2>No posee los permisos necesarios</h2>
+}
+@code{
+    Tramite _tramite= new Tramite();
+    [Parameter] public int? Id{get;set;}
+    string _contenido="",_IdExpediente="";
+    EtiquetaTramite _etiqueta;
+    bool _tieneP=false;
+
+    protected override void OnParametersSet(){
+        if(ServicioIniciar.userL !=null){
+            if(ServicioAutorizacion.PoseeElPermiso(ServicioIniciar.userL,Permiso.TramiteModificacion)){
+                _tieneP=true;
+            }
+        }
+        if(_tieneP){
+            if(Id != null){
+                var tram_hallado= CasoDeUsoTramiteConsultaTramite.Ejecutar(Id.Value);
+                if(tram_hallado != null){
+                    _tramite=tram_hallado;
+                    int id=int.Parse(_IdExpediente);
+                    //_tramite.idExpediente=int.Parse(_IdExpediente);
+                    _tramite.idExpediente=id;
+                    _tramite.contenidoT=_contenido;
+                    
+                    //_tramite.etiqueta=(EtiquetaTramite)Enum.Parse(typeof(EtiquetaTramite),_etiqueta); 
+                    _tramite.etiqueta=_etiqueta;
+                }
+            }
+        }
+    }
+    void Aceptar(){
+         CasoDeUsoTramiteModificacion.Ejecutar(_tramite,ServicioIniciar.userL);
+         _tramite= new Tramite();
+        Navegador.NavigateTo("/listarTramites");
+    }
+}

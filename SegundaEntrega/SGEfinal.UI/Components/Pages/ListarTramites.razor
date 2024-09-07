@@ -1,0 +1,124 @@
+@page "/listarTramites"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador
+@inject IJSRuntime JsRunTime;
+
+@inject CasoDeUsoTramiteListarTramites CasoDeUsoTramiteListarTramites
+@inject CasoDeUsoTramiteAlta CasoDeUsoTramiteAlta
+@inject CasoDeUsoTramiteBaja CasoDeUsoTramiteBaja
+@inject CasoDeUsoTramiteModificacion CasoDeUsoTramiteModificacion
+@inject CasoDeUsoTramiteConsultaPorEtiqueta CasoDeUsoTramiteConsultaPorEtiqueta 
+
+@inject ServicioIniciar ServicioIniciar
+@inject IServicioAutorizacion ServicioAutorizacion
+
+@using SGEfinal.UI.Components
+
+<DialogoConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+
+@if(_lista.Count()>0){
+    <h3>Tramites</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IdExpediente</th>
+                <th>Etiqueta</th>
+                <th>Contenido</th>
+                <th>FechaCreacion</th>
+                <th>FechaModificacion</th>
+                <th>MoficadoPor</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+         <tbody>
+            @foreach(var cli in _lista){
+                <tr>
+                    <td>@cli.idTramite</td>
+                    <td> @cli.idExpediente</td>
+                    <td>@cli.etiqueta</td>
+                    <td>@cli.contenidoT</td>
+                    <td>@cli.creacionT</td>
+                    <td>@cli.modificacionT</td>
+                    <td>@cli.idUsuario</td>
+                    <td>
+                        @if(modificar){
+                            <button class="btn btn-primary" @onclick="()=>ModificarTramite(cli)">Editar</button>
+                        }
+                        @if(eliminaar){
+                            <button class="btn btn-danger"@onclick="()=>ConfirmarEliminacion(cli)">Eliminar</button>
+                        }
+                    </td>            
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else{
+    <h4>No existen tramites</h4>
+}
+@if(alta){
+    <h1>Registrar tramite </h1>
+    <input placeholder="IdExpediente" @bind="_IdExpediente"/>
+    <input placeholder="Contenido" @bind="_contenido"/>
+    <label class="mt-1" for="etiq">Etiqueta</label>
+    <select class="form-control" @bind="_etiqueta" id="etiq">
+        <option value="" disabled selected>Seleccione una etiqueta</option>
+        <option>EscritoPresentado</option>
+        <option>PaseAEstudio</option>
+        <option>Despacho</option>
+        <option>Resolucion</option>
+        <option>Notificacion</option>
+        <option>PaseAlArchivo</option>
+    </select>
+    <button @onclick="AgregarTramite">Aceptar</button>
+
+}
+else{
+    <h1>No posee los permisos necesarios</h1>
+}
+
+@code{
+ bool eliminaar=false,modificar=false,alta=false;
+    string _contenido ="";
+    string _etiqueta="",_IdExpediente="";
+    List<Tramite> _lista=new List<Tramite>();
+    protected override void OnInitialized(){
+        _lista=CasoDeUsoTramiteListarTramites.Ejecutar();
+        if(ServicioAutorizacion.PoseeElPermiso(ServicioIniciar.userL,Permiso.TramiteModificacion)){
+            modificar=true;
+        }
+        if(ServicioAutorizacion.PoseeElPermiso(ServicioIniciar.userL,Permiso.TramiteBaja)){
+            eliminaar=true;
+        }
+        if(ServicioAutorizacion.PoseeElPermiso(ServicioIniciar.userL,Permiso.TramiteAlta)){
+            alta=true;
+        }
+    }
+    DialogoConfirmacion dialogo=null!;
+    Tramite? _tramiteEliminar=null;
+    private void ConfirmarEliminacion(Tramite cli){
+        _tramiteEliminar=cli;
+        dialogo.Mensaje = $"¿Desea eliminar el tramite {cli.idTramite}?";
+        dialogo.Mostrar();
+    }
+    private void Eliminar(){
+        if(_tramiteEliminar!= null){
+            CasoDeUsoTramiteBaja.Ejecutar(_tramiteEliminar.idExpediente,ServicioIniciar.userL);
+            _lista=CasoDeUsoTramiteListarTramites.Ejecutar();
+        }
+    }
+
+    void ModificarTramite(Tramite t){
+        Navegador.NavigateTo($"/editarTram/{t.idTramite}");
+    }
+
+    void AgregarTramite(){
+        Tramite t=new Tramite();
+        t.etiqueta=(EtiquetaTramite)Enum.Parse(typeof(EtiquetaTramite),_etiqueta);
+        t.contenidoT=_contenido;
+        t.idExpediente=int.Parse(_IdExpediente);
+        CasoDeUsoTramiteAlta.Ejecutar(t,ServicioIniciar.userL);
+        _lista=CasoDeUsoTramiteListarTramites.Ejecutar();
+    }        
+}

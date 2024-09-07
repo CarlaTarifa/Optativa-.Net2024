@@ -1,0 +1,39 @@
+@page "/iniciarSesion"
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+@inject CasoDeUsoUsuarioIngresar iniciarSesion
+@inject ServicioIniciar servicioIniciar
+
+@using SGEfinal.UI.Components
+
+
+<h2>Ingresar </h2>
+<form>
+    <input class="form-control" placeholder="Email" @bind="email"><br>
+    <input class="form-control" placeholder="Contraseña" @bind="contra"><br>
+</form>
+<button class="btn btn-primary" @onclick="Ingresar">Ingresar</button>
+<button class="=btn btn-secondary"@onclick="Cancelar">Cancelar</button>
+<DialogoConfirmacion @ref=dialogo />
+@code{
+    DialogoConfirmacion dialogo=null!;
+    string email="";
+    string contra="";
+    void Ingresar(){
+        
+        Usuario? user= iniciarSesion.Ejecutar(email,contra);
+        if(user != null){
+            servicioIniciar.userL=user;
+            Navigation.NavigateTo("/Ingresar");
+        }
+        else {
+            dialogo.Mensaje=$"Usuario no registrado";
+            dialogo.Mostrar();
+            StateHasChanged();
+        }
+    }
+    void Cancelar(){
+        Navigation.NavigateTo("/");
+    }
+
+}

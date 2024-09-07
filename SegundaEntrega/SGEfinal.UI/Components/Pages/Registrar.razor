@@ -1,0 +1,26 @@
+@page "/registrarse"
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+@inject CasoDeUsoUsuarioRegistrarse CasoDeUsoUsuarioRegistrarse
+
+
+<h3>Ingrese sus datos</h3>
+<form>
+    <input class="form-control" placeholder="Nombre" @bind="u.nombre"><br>
+    <input class="form-control" placeholder="Apellido" @bind="u.apellido"><br>
+    <input class="form-control" placeholder="Email" @bind="u.email"><br>
+    <input class="form-control" placeholder="Contraseña"@bind="u.contra"><br>
+</form>
+<button class="btn btn-primary" @onclick="Guardar">Guardar</button> 
+<button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+
+@code{
+    Usuario u=new Usuario();
+    private void Guardar(){
+        CasoDeUsoUsuarioRegistrarse.Ejecutar(u);
+        Cancelar();
+
+    }
+    private void Cancelar()=>Navigation.NavigateTo("/");
+}
