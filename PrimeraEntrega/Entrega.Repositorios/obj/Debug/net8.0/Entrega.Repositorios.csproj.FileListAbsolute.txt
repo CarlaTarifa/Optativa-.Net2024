@@ -1,0 +1,15 @@
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\bin\Debug\net8.0\Entrega.Repositorios.deps.json
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\bin\Debug\net8.0\Entrega.Repositorios.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\bin\Debug\net8.0\Entrega.Repositorios.pdb
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\bin\Debug\net8.0\Entrega.Aplicacion.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\bin\Debug\net8.0\Entrega.Aplicacion.pdb
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.csproj.AssemblyReference.cache
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.AssemblyInfoInputs.cache
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.AssemblyInfo.cs
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.csproj.CoreCompileInputs.cache
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega..65913C84.Up2Date
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\refint\Entrega.Repositorios.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\Entrega.Repositorios.pdb
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Repositorios\obj\Debug\net8.0\ref\Entrega.Repositorios.dll
