@@ -1,0 +1,11 @@
+C:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\bin\Debug\net8.0\Entrega.Aplicacion.deps.json
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\bin\Debug\net8.0\Entrega.Aplicacion.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\bin\Debug\net8.0\Entrega.Aplicacion.pdb
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\Entrega.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\Entrega.Aplicacion.AssemblyInfoInputs.cache
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\Entrega.Aplicacion.AssemblyInfo.cs
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\Entrega.Aplicacion.csproj.CoreCompileInputs.cache
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\Entrega.Aplicacion.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\refint\Entrega.Aplicacion.dll
+c:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\Entrega.Aplicacion.pdb
+C:\Users\LENOVO\optativaNet\Entrega\Entrega.Aplicacion\obj\Debug\net8.0\ref\Entrega.Aplicacion.dll
